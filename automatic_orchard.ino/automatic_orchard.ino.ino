@@ -20,11 +20,13 @@ const int selectButton = 3;
 
 // -------------------------------------------------------
 // Variables
-int sensor_1_START_WATERING = 600;
-int sensor_2_START_WATERING = 600;
+int sensor_1_START_WATERING_VALUE = 600;
+int sensor_2_START_WATERING_VALUE = 600;
 
+int sensor_1_TIME_BETWEEN_WATERING = 3600000 // 1 hr
+int sensor_2_TIME_BETWEEN_WATERING = 3600000 // 1 hr
 
-
+int long interval_to_set_time_to_0 = 604800000;  // 1 week
 
 
 
