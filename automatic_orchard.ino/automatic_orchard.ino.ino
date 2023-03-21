@@ -1,7 +1,9 @@
 #include <LCD_I2C.h>
 LCD_I2C lcd(0x27, 16, 2);
 
-// Conections
+// -------------------------------------------------------
+// --------------------- Connections ---------------------
+// -------------------------------------------------------
 const int sensor_1_PIN = 4;
 const int sensor_2_PIN = 5;
 
@@ -12,7 +14,9 @@ const int nextButton = 1;
 const int backButton = 2;
 const int selectButton = 3;
 
-// Constants
+// -------------------------------------------------------
+// ---------------------- Constants ----------------------
+// -------------------------------------------------------
 const int dirt_sensor_1_TOP_VALUE = 1023;
 const int dirt_sensor_1_BOTTOM_VALUE = 0;
 const int dirt_sensor_2_TOP_VALUE = 1023;
@@ -21,14 +25,31 @@ const int dirt_sensor_2_BOTTOM_VALUE = 0;
 const int long interval_to_set_time_to_0 = 604800000;  // 1 week //
 
 // -------------------------------------------------------
-// Variables
+// ---------------------- Variables ----------------------
+// -------------------------------------------------------
+
+// Main menu
 int menu_index = 0;
 
+// Submenus
 int sensor_1_config_menu_index = 0;
 bool sensor_1_config_menu = false;
 
 int sensor_2_config_menu_index = 0;
 bool sensor_2_config_menu = false;
+
+// Submenus submenus
+int sensor_1_submenu_watering_menu_index = 0;
+bool sensor_1_submenu_watering_menu = false;
+
+int sensor_1_submenu_times_menu_index = 0;
+bool sensor_1_submenu_times_menu = false;
+
+int sensor_2_submenu_watering_menu_index = 0;
+bool sensor_2_submenu_watering_menu = false;
+
+int sensor_2_submenu_times_menu_index = 0;
+bool sensor_2_submenu_times_menu = false;
 
 int actual_time = 0;
 
@@ -60,7 +81,9 @@ int rele_2_STATUS = 0;
 extern volatile unsigned long timer0_millis;
 unsigned long timer_new_value = 0;
 
-// -------------------------------------------------------------
+// -------------------------------------------------------
+// ---------------------- Functions ----------------------
+// -------------------------------------------------------
 
 
 void setup() {
@@ -114,12 +137,19 @@ void loop() {
   }
 
   if (selectButton == HIGH) {
-    while (selectButton == HIGH) {}
-    execute_function();
+    while (selectButton == HIGH) {
+      int loopStartMs = millis();
+      while (millis() - loopStartMs < 100) {}
+      execute_function();
+    }
   }
+
+  menu()
 }
 
-// -------------------------------------------------------------
+// -------------------------------------------------------
+// ------------------- Menues displays -------------------
+// -------------------------------------------------------
 
 void menu() {
   switch (menu_index) {
@@ -141,17 +171,17 @@ void menu() {
     case 1:
       lcd.clear();
       lcd.setCursor(0, 0);
-      lcd.print("> Config. Zone 1");
+      lcd.print("> Config. zona 1");
       lcd.setCursor(0, 1);
-      lcd.print("Config. Zone 2");
+      lcd.print("Config. zona 2");
       break;
 
     case 2:
       lcd.clear();
       lcd.setCursor(0, 0);
-      lcd.print("Config. Zone 1");
+      lcd.print("Config. Zona 1");
       lcd.setCursor(0, 1);
-      lcd.print("> Config. Zone 2");
+      lcd.print("> Config. Zona 2");
       break;
   }
 }
@@ -159,7 +189,7 @@ void menu() {
 // -------------------------------------------------------------
 
 void config_sensor_1_menu() {
-  switch (menu_index) {
+  switch (sensor_1_config_menu_index) {
     case 0:
       lcd.clear();
       lcd.setCursor(0, 0);
@@ -186,8 +216,8 @@ void config_sensor_1_menu() {
 
 // -------------------------------------------------------------
 
-void config_sensor_1() {
-  switch (menu_index) {
+void watering_config_sensor_1() {
+  switch (sensor_1_submenu_watering_menu_index) {
     case 1:
       lcd.clear();
       lcd.setCursor(0, 0);
@@ -219,16 +249,187 @@ void config_sensor_1() {
       lcd.setCursor(0, 1);
       lcd.print("> Fin Z.1 -3%");
       break;
+
+    case 5:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("> Volver");
+      break;
+  }
+}
+
+// -------------------------------------------------------------
+
+void times_config_sensor_1() {
+  switch (sensor_1_submenu_times_menu_index) {
+    case 1:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("T. entre riego");
+      lcd.setCursor(0, 1);
+      lcd.print("> +3%    |   -3%");
+      break;
+
+    case 2:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("T. entre riego");
+      lcd.setCursor(0, 1);
+      lcd.print("+3%    |   > -3%");
+      break;
+
+    case 4:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Tiempo de riego");
+      lcd.setCursor(0, 1);
+      lcd.print("> +3%    |   -3%");
+      break;
+
+    case 5:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Tiempo de riego");
+      lcd.setCursor(0, 1);
+      lcd.print("+3%    |   > -3%");
+      break;
+
+    case 5:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("> Volver");
+      break;
+  }
+}
+
+// -------------------------------------------------------------
+
+void config_sensor_2_menu() {
+  switch (sensor_2_config_menu_index) {
+    case 0:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("> Valores riego");
+      lcd.setCursor(0, 1);
+      lcd.print("Tiempo riego");
+      break;
+
+    case 1:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Valores riego");
+      lcd.setCursor(0, 1);
+      lcd.print("> Tiempo riego");
+      break;
+
+    case 2:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("> Volver");
+      break;
+  }
+}
+
+// -------------------------------------------------------------
+
+void watering_config_sensor_2() {
+  switch (sensor_2_submenu_watering_menu_index) {
+    case 1:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("> Inicio Z.2 +3%");
+      lcd.setCursor(0, 1);
+      lcd.print("Inicio Z.2 -3%");
+      break;
+
+    case 2:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Inicio Z.2 +3%");
+      lcd.setCursor(0, 1);
+      lcd.print("> Inicio Z.2 -3%");
+      break;
+
+    case 3:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("> Fin Z.2 +3%");
+      lcd.setCursor(0, 1);
+      lcd.print("Fin Z.2 -3%");
+      break;
+
+    case 4:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Fin Z.2 +3%");
+      lcd.setCursor(0, 1);
+      lcd.print("> Fin Z.2 -3%");
+      break;
+
+    case 5:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("> Volver");
+      break;
+  }
+}
+
+// -------------------------------------------------------------
+
+void times_config_sensor_2() {
+  switch (sensor_2_submenu_times_menu_index) {
+    case 1:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("T. entre riego");
+      lcd.setCursor(0, 1);
+      lcd.print("> +3%    |   -3%");
+      break;
+
+    case 2:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("T. entre riego");
+      lcd.setCursor(0, 1);
+      lcd.print("+3%    |   > -3%");
+      break;
+
+    case 4:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Tiempo de riego");
+      lcd.setCursor(0, 1);
+      lcd.print("> +3%    |   -3%");
+      break;
+
+    case 5:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Tiempo de riego");
+      lcd.setCursor(0, 1);
+      lcd.print("+3%    |   > -3%");
+      break;
+
+    case 5:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("> Volver");
+      break;
   }
 }
 
 
-// -------------------------------------------------------------
+
+// -------------------------------------------------------
+// ------------- Menues functions execution --------------
+// -------------------------------------------------------
 
 void execute_function() {
 }
 
-// -------------------------------------------------------------
+// -------------------------------------------------------
+// ------------------- Watering verif. -------------------
+// -------------------------------------------------------
 
 void verify_watering_conditions() {
   // Stop watering:
@@ -256,7 +457,9 @@ void verify_watering_conditions() {
   }
 }
 
-// -------------------------------------------------------------
+// -------------------------------------------------------
+// ------------------- Set millis to 0 -------------------
+// -------------------------------------------------------
 
 void setMillis(unsigned long new_millis) {
   uint8_t oldSREG = SREG;
