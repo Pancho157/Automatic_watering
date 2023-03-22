@@ -51,6 +51,7 @@ bool sensor_2_submenu_watering_menu = false;
 int sensor_2_submenu_times_menu_index = 0;
 bool sensor_2_submenu_times_menu = false;
 
+// Other variables
 int actual_time = 0;
 
 int sensor_1_LECTURE = 0;
@@ -144,7 +145,28 @@ void loop() {
     }
   }
 
-  menu()
+  // Menus render
+  if (sensor_1_config_menu) {
+    if (sensor_1_submenu_watering_menu) {
+      watering_config_sensor_1();
+    } else if (sensor_1_submenu_times_menu) {
+      times_config_sensor_1();
+    } else {
+      config_sensor_1_menu();
+    }
+
+  } else if (sensor_2_config_menu) {
+    if (sensor_2_submenu_watering_menu) {
+      watering_config_sensor_2();
+    } else if (sensor_2_submenu_times_menu) {
+      times_config_sensor_2();
+    } else {
+      config_sensor_2_menu();
+    }
+
+  } else {
+    menu();
+  }
 }
 
 // -------------------------------------------------------
@@ -218,7 +240,7 @@ void config_sensor_1_menu() {
 
 void watering_config_sensor_1() {
   switch (sensor_1_submenu_watering_menu_index) {
-    case 1:
+    case 0:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("> Inicio Z.1 +3%");
@@ -226,7 +248,7 @@ void watering_config_sensor_1() {
       lcd.print("Inicio Z.1 -3%");
       break;
 
-    case 2:
+    case 1:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("Inicio Z.1 +3%");
@@ -234,7 +256,7 @@ void watering_config_sensor_1() {
       lcd.print("> Inicio Z.1 -3%");
       break;
 
-    case 3:
+    case 2:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("> Fin Z.1 +3%");
@@ -242,7 +264,7 @@ void watering_config_sensor_1() {
       lcd.print("Fin Z.1 -3%");
       break;
 
-    case 4:
+    case 3:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("Fin Z.1 +3%");
@@ -250,7 +272,7 @@ void watering_config_sensor_1() {
       lcd.print("> Fin Z.1 -3%");
       break;
 
-    case 5:
+    case 4:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("> Volver");
@@ -262,31 +284,31 @@ void watering_config_sensor_1() {
 
 void times_config_sensor_1() {
   switch (sensor_1_submenu_times_menu_index) {
+    case 0:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("T. entre riego");
+      lcd.setCursor(0, 1);
+      lcd.print("> +3%    |   -3%");
+      break;
+
     case 1:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("T. entre riego");
       lcd.setCursor(0, 1);
-      lcd.print("> +3%    |   -3%");
+      lcd.print("+3%    |   > -3%");
       break;
 
     case 2:
       lcd.clear();
       lcd.setCursor(0, 0);
-      lcd.print("T. entre riego");
-      lcd.setCursor(0, 1);
-      lcd.print("+3%    |   > -3%");
-      break;
-
-    case 4:
-      lcd.clear();
-      lcd.setCursor(0, 0);
       lcd.print("Tiempo de riego");
       lcd.setCursor(0, 1);
       lcd.print("> +3%    |   -3%");
       break;
 
-    case 5:
+    case 3:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("Tiempo de riego");
@@ -294,7 +316,7 @@ void times_config_sensor_1() {
       lcd.print("+3%    |   > -3%");
       break;
 
-    case 5:
+    case 4:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("> Volver");
@@ -334,7 +356,7 @@ void config_sensor_2_menu() {
 
 void watering_config_sensor_2() {
   switch (sensor_2_submenu_watering_menu_index) {
-    case 1:
+    case 0:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("> Inicio Z.2 +3%");
@@ -342,7 +364,7 @@ void watering_config_sensor_2() {
       lcd.print("Inicio Z.2 -3%");
       break;
 
-    case 2:
+    case 1:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("Inicio Z.2 +3%");
@@ -350,7 +372,7 @@ void watering_config_sensor_2() {
       lcd.print("> Inicio Z.2 -3%");
       break;
 
-    case 3:
+    case 2:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("> Fin Z.2 +3%");
@@ -358,7 +380,7 @@ void watering_config_sensor_2() {
       lcd.print("Fin Z.2 -3%");
       break;
 
-    case 4:
+    case 3:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("Fin Z.2 +3%");
@@ -366,7 +388,7 @@ void watering_config_sensor_2() {
       lcd.print("> Fin Z.2 -3%");
       break;
 
-    case 5:
+    case 4:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("> Volver");
@@ -378,31 +400,31 @@ void watering_config_sensor_2() {
 
 void times_config_sensor_2() {
   switch (sensor_2_submenu_times_menu_index) {
+    case 0:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("T. entre riego");
+      lcd.setCursor(0, 1);
+      lcd.print("> +3%    |   -3%");
+      break;
+
     case 1:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("T. entre riego");
       lcd.setCursor(0, 1);
-      lcd.print("> +3%    |   -3%");
+      lcd.print("+3%    |   > -3%");
       break;
 
     case 2:
       lcd.clear();
       lcd.setCursor(0, 0);
-      lcd.print("T. entre riego");
-      lcd.setCursor(0, 1);
-      lcd.print("+3%    |   > -3%");
-      break;
-
-    case 4:
-      lcd.clear();
-      lcd.setCursor(0, 0);
       lcd.print("Tiempo de riego");
       lcd.setCursor(0, 1);
       lcd.print("> +3%    |   -3%");
       break;
 
-    case 5:
+    case 3:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("Tiempo de riego");
@@ -410,7 +432,7 @@ void times_config_sensor_2() {
       lcd.print("+3%    |   > -3%");
       break;
 
-    case 5:
+    case 4:
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("> Volver");
@@ -425,6 +447,70 @@ void times_config_sensor_2() {
 // -------------------------------------------------------
 
 void execute_function() {
+  if (sensor_1_config_menu) {
+    if (sensor_1_submenu_watering_menu) {
+      // Sensor 1 Watering menu
+
+    } else if (sensor_1_submenu_times_menu) {
+      // Sensor 1 Time menu
+
+    } else {
+      // Sensor 1 config selector menu
+    }
+
+  } else if (sensor_2_config_menu) {
+    if (sensor_2_submenu_watering_menu) {
+      // Sensor 2 Watering menu
+      switch (sensor_2_submenu_watering_menu_index) {
+        case 0:
+          "Inicio Z.2 +3%";
+        case 1:
+          "Inicio Z.2 -3%";
+        case 2:
+          "Fin Z.2 +3%";
+        case 3:
+          "Fin Z.2 -3%";
+        case 4:
+          sensor_2_submenu_times_menu = false;
+      }
+
+    } else if (sensor_2_submenu_times_menu) {
+      // Sensor 2 Time menu
+      switch (sensor_2_submenu_times_menu_index) {
+        case 0:
+          sensor_1_TIME_BETWEEN_WATERING += 0;
+          "T. entre riego +3%";
+        case 1:
+          "T. entre riego -3%";
+        case 2:
+          "T. de riego +3%";
+        case 3:
+          "T. de riego -3%";
+        case 4:
+          sensor_2_submenu_times_menu = false;
+      }
+
+    } else {
+      // Sensor 2 config selector menu
+      switch (sensor_2_config_menu_index) {
+        case 0:
+          sensor_2_submenu_watering_menu = true;
+        case 1:
+          sensor_2_submenu_times_menu = true;
+        case 2:
+          sensor_2_config_menu = false;
+      }
+    }
+
+  } else {
+    // Root menu
+    switch (menu_index) {
+      case 1:
+        sensor_1_config_menu = true;
+      case 2:
+        sensor_2_config_menu = true;
+    }
+  }
 }
 
 // -------------------------------------------------------
