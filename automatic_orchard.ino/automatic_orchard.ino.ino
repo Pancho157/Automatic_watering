@@ -259,22 +259,6 @@ void watering_config_sensor_1() {
     case 2:
       lcd.clear();
       lcd.setCursor(0, 0);
-      lcd.print("> Fin Z.1 +3%");
-      lcd.setCursor(0, 1);
-      lcd.print("Fin Z.1 -3%");
-      break;
-
-    case 3:
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Fin Z.1 +3%");
-      lcd.setCursor(0, 1);
-      lcd.print("> Fin Z.1 -3%");
-      break;
-
-    case 4:
-      lcd.clear();
-      lcd.setCursor(0, 0);
       lcd.print("> Volver");
       break;
   }
@@ -375,22 +359,6 @@ void watering_config_sensor_2() {
     case 2:
       lcd.clear();
       lcd.setCursor(0, 0);
-      lcd.print("> Fin Z.2 +3%");
-      lcd.setCursor(0, 1);
-      lcd.print("Fin Z.2 -3%");
-      break;
-
-    case 3:
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Fin Z.2 +3%");
-      lcd.setCursor(0, 1);
-      lcd.print("> Fin Z.2 -3%");
-      break;
-
-    case 4:
-      lcd.clear();
-      lcd.setCursor(0, 0);
       lcd.print("> Volver");
       break;
   }
@@ -450,12 +418,40 @@ void execute_function() {
   if (sensor_1_config_menu) {
     if (sensor_1_submenu_watering_menu) {
       // Sensor 1 Watering menu
+      switch (sensor_1_submenu_watering_menu_index) {
+        case 0:
+          sensor_1_START_WATERING_PERCENTAGE = sensor_1_START_WATERING_PERCENTAGE + sensor_1_START_WATERING_PERCENTAGE * 0.03;
+        case 1:
+          sensor_1_START_WATERING_PERCENTAGE = sensor_1_START_WATERING_PERCENTAGE - sensor_1_START_WATERING_PERCENTAGE * 0.03;
+        case 2:
+          sensor_1_submenu_times_menu = false;
+      }
 
     } else if (sensor_1_submenu_times_menu) {
       // Sensor 1 Time menu
+      switch (sensor_1_submenu_times_menu_index) {
+        case 0:
+          sensor_1_TIME_BETWEEN_WATERING = sensor_1_TIME_BETWEEN_WATERING + sensor_1_TIME_BETWEEN_WATERING * 0.03;
+        case 1:
+          sensor_1_TIME_BETWEEN_WATERING = sensor_1_TIME_BETWEEN_WATERING - sensor_1_TIME_BETWEEN_WATERING * 0.03;
+        case 2:
+          sensor_1_TIME_WATERING = sensor_1_TIME_WATERING - sensor_1_TIME_WATERING * 0.03;
+        case 3:
+          sensor_1_TIME_WATERING = sensor_1_TIME_WATERING - sensor_1_TIME_WATERING * 0.03;
+        case 4:
+          sensor_1_submenu_times_menu = false;
+      }
 
     } else {
       // Sensor 1 config selector menu
+      switch (sensor_1_config_menu_index) {
+        case 0:
+          sensor_1_submenu_watering_menu = true;
+        case 1:
+          sensor_1_submenu_times_menu = true;
+        case 2:
+          sensor_1_config_menu = false;
+      }
     }
 
   } else if (sensor_2_config_menu) {
@@ -463,14 +459,10 @@ void execute_function() {
       // Sensor 2 Watering menu
       switch (sensor_2_submenu_watering_menu_index) {
         case 0:
-          "Inicio Z.2 +3%";
+          sensor_2_START_WATERING_PERCENTAGE = sensor_2_START_WATERING_PERCENTAGE + sensor_2_START_WATERING_PERCENTAGE * 0.03;
         case 1:
-          "Inicio Z.2 -3%";
+          sensor_2_START_WATERING_PERCENTAGE = sensor_2_START_WATERING_PERCENTAGE - sensor_2_START_WATERING_PERCENTAGE * 0.03;
         case 2:
-          "Fin Z.2 +3%";
-        case 3:
-          "Fin Z.2 -3%";
-        case 4:
           sensor_2_submenu_times_menu = false;
       }
 
@@ -478,14 +470,13 @@ void execute_function() {
       // Sensor 2 Time menu
       switch (sensor_2_submenu_times_menu_index) {
         case 0:
-          sensor_1_TIME_BETWEEN_WATERING += 0;
-          "T. entre riego +3%";
+          sensor_2_TIME_BETWEEN_WATERING = sensor_2_TIME_BETWEEN_WATERING + sensor_2_TIME_BETWEEN_WATERING * 0.03;
         case 1:
-          "T. entre riego -3%";
+          sensor_2_TIME_BETWEEN_WATERING = sensor_2_TIME_BETWEEN_WATERING - sensor_2_TIME_BETWEEN_WATERING * 0.03;
         case 2:
-          "T. de riego +3%";
+          sensor_2_TIME_WATERING = sensor_2_TIME_WATERING - sensor_2_TIME_WATERING * 0.03;
         case 3:
-          "T. de riego -3%";
+          sensor_2_TIME_WATERING = sensor_2_TIME_WATERING - sensor_2_TIME_WATERING * 0.03;
         case 4:
           sensor_2_submenu_times_menu = false;
       }
