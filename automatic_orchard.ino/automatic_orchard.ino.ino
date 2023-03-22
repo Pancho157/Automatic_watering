@@ -7,12 +7,12 @@ LCD_I2C lcd(0x27, 16, 2);
 const int sensor_1_PIN = 4;
 const int sensor_2_PIN = 5;
 
-const int sensor_1_RELE = 6;
-const int sensor_2_RELE = 7;
+const int sensor_1_RELE = 7;
+const int sensor_2_RELE = 8;
 
-const int nextButton = 1;
-const int backButton = 2;
-const int selectButton = 3;
+const int nextButton = 11;
+const int backButton = 12;
+const int selectButton = 13;
 
 // -------------------------------------------------------
 // ---------------------- Constants ----------------------
@@ -93,9 +93,9 @@ void setup() {
   lcd.begin();
   lcd.backlight();
 
-  pinMode(nextButton, INPUT_PULLUP);
-  pinMode(backButton, INPUT_PULLUP);
-  pinMode(selectButton, INPUT_PULLUP);
+  pinMode(nextButton, INPUT);
+  pinMode(backButton, INPUT);
+  pinMode(selectButton, INPUT);
 }
 
 // -------------------------------------------------------------
@@ -130,43 +130,91 @@ void loop() {
   }
 
   if (backButton == HIGH) {
-    while (backButton == HIGH) {}
-    menu_index--;
-    if (menu_index < 0) {
-      menu_index = 5;  // Menu top
-    }
-  }
-
-  if (selectButton == HIGH) {
-    while (selectButton == HIGH) {
+    while (backButton == HIGH) {
       int loopStartMs = millis();
       while (millis() - loopStartMs < 100) {}
-      execute_function();
+
+      if (sensor_1_config_menu) {
+        if (sensor_1_submenu_watering_menu) {
+          sensor_1_submenu_watering_menu_index--;
+          if (sensor_1_submenu_watering_menu_index < 0) {
+            sensor_1_submenu_watering_menu_index = 5;  // Menu top
+          }
+
+        } else if (sensor_1_submenu_times_menu) {
+          sensor_1_submenu_times_menu_index--;
+          if (sensor_1_submenu_times_menu_index < 0) {
+            sensor_1_submenu_times_menu_index = 5;  // Menu top
+          }
+        } else {
+          sensor_1_config_menu_index--;
+          if (sensor_1_config_menu_index < 0) {
+            sensor_1_config_menu_index = 5;  // Menu top
+          }
+        }
+      } else if (sensor_2_config_menu) {
+        if (sensor_2_submenu_watering_menu) {
+          // Sensor 2 watering configs menu
+          sensor_2_submenu_watering_menu_index--;
+          if (sensor_2_submenu_watering_menu_index < 0) {
+            sensor_2_submenu_watering_menu_index = 5;  // Menu top
+          }
+
+        } else if (sensor_2_submenu_times_menu) {
+          // Sensor 2 times configs menu
+          sensor_2_submenu_times_menu_index--;
+          if (sensor_2_submenu_times_menu_index < 0) {
+            sensor_2_submenu_times_menu_index = 5;  // Menu top
+          }
+
+        } else {
+          // Sensor 2 configs selector menu
+          sensor_2_config_menu_index--;
+          if (sensor_2_config_menu_index < 0) {
+            sensor_2_config_menu_index = 5;  // Menu top
+          }
+        }
+      } else {
+        // Root menu
+        menu_index--;
+        if (menu_index < 0) {
+          menu_index = 2;
+        }
+      }
     }
   }
+}
 
-  // Menus render
-  if (sensor_1_config_menu) {
-    if (sensor_1_submenu_watering_menu) {
-      watering_config_sensor_1();
-    } else if (sensor_1_submenu_times_menu) {
-      times_config_sensor_1();
-    } else {
-      config_sensor_1_menu();
-    }
+if (selectButton == HIGH) {
+  while (selectButton == HIGH) {
+    int loopStartMs = millis();
+    while (millis() - loopStartMs < 100) {}
+    execute_function();
+  }
+}
 
-  } else if (sensor_2_config_menu) {
-    if (sensor_2_submenu_watering_menu) {
-      watering_config_sensor_2();
-    } else if (sensor_2_submenu_times_menu) {
-      times_config_sensor_2();
-    } else {
-      config_sensor_2_menu();
-    }
-
+// Menus render
+if (sensor_1_config_menu) {
+  if (sensor_1_submenu_watering_menu) {
+    watering_config_sensor_1();
+  } else if (sensor_1_submenu_times_menu) {
+    times_config_sensor_1();
   } else {
-    menu();
+    config_sensor_1_menu();
   }
+
+} else if (sensor_2_config_menu) {
+  if (sensor_2_submenu_watering_menu) {
+    watering_config_sensor_2();
+  } else if (sensor_2_submenu_times_menu) {
+    times_config_sensor_2();
+  } else {
+    config_sensor_2_menu();
+  }
+
+} else {
+  menu();
+}
 }
 
 // -------------------------------------------------------
