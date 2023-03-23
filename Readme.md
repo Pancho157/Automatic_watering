@@ -14,6 +14,7 @@ El estudiante deberá desarrollar la navegabilidad básica de la aplicación, de
 ## Conections
 
 ---
+<img src="./arduino-nano-pinout.png" width="500">
 
 Sensor N°1: D4
 Sensor N°2: D4
@@ -32,8 +33,6 @@ Before button: D2
 Select button: D3
 
 (Los botones se conectan a gnd y vcc, sacando un cable que verifica cuando se cierra el circuito de los mismos y dicho cable se conecta a los puertos mencionados anteriormente)
-
-<img src="./src/images/paraElReadme/funcionalidadBasica.gif" width="900" />
 
 ## Modules
 

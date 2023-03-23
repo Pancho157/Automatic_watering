@@ -4,8 +4,8 @@ LCD_I2C lcd(0x27, 16, 2);
 // -------------------------------------------------------
 // --------------------- Connections ---------------------
 // -------------------------------------------------------
-const int sensor_1_PIN = 4;
-const int sensor_2_PIN = 5;
+const int sensor_1_PIN = 9;
+const int sensor_2_PIN = 10;
 
 const int sensor_1_RELE = 7;
 const int sensor_2_RELE = 8;
@@ -183,38 +183,37 @@ void loop() {
       }
     }
   }
-}
 
-if (selectButton == HIGH) {
-  while (selectButton == HIGH) {
-    int loopStartMs = millis();
-    while (millis() - loopStartMs < 100) {}
-    execute_function();
+  if (selectButton == HIGH) {
+    while (selectButton == HIGH) {
+      int loopStartMs = millis();
+      while (millis() - loopStartMs < 100) {}
+      execute_function();
+    }
   }
-}
 
-// Menus render
-if (sensor_1_config_menu) {
-  if (sensor_1_submenu_watering_menu) {
-    watering_config_sensor_1();
-  } else if (sensor_1_submenu_times_menu) {
-    times_config_sensor_1();
+  // Menus render
+  if (sensor_1_config_menu) {
+    if (sensor_1_submenu_watering_menu) {
+      watering_config_sensor_1();
+    } else if (sensor_1_submenu_times_menu) {
+      times_config_sensor_1();
+    } else {
+      config_sensor_1_menu();
+    }
+
+  } else if (sensor_2_config_menu) {
+    if (sensor_2_submenu_watering_menu) {
+      watering_config_sensor_2();
+    } else if (sensor_2_submenu_times_menu) {
+      times_config_sensor_2();
+    } else {
+      config_sensor_2_menu();
+    }
+
   } else {
-    config_sensor_1_menu();
+    menu();
   }
-
-} else if (sensor_2_config_menu) {
-  if (sensor_2_submenu_watering_menu) {
-    watering_config_sensor_2();
-  } else if (sensor_2_submenu_times_menu) {
-    times_config_sensor_2();
-  } else {
-    config_sensor_2_menu();
-  }
-
-} else {
-  menu();
-}
 }
 
 // -------------------------------------------------------
@@ -575,7 +574,7 @@ void verify_watering_conditions() {
   if (sensor_2_TIME_BETWEEN_WATERING > actual_time - zone_2_LAST_WATERING && sensor_2_START_WATERING_VALUE < sensor_2_LECTURE) {
     rele_2_STATUS = 1;
     digitalWrite(sensor_2_RELE, HIGH);
-    zone_2_LAST_WATERING = actual_time;
+    zone_2_LAST_WATERING = actual_time;+
   } else {
     rele_2_STATUS = 0;
     digitalWrite(sensor_2_RELE, LOW);
