@@ -14,47 +14,55 @@ El estudiante deberá desarrollar la navegabilidad básica de la aplicación, de
 ## Conections
 
 ---
+
 <img src="./arduino-nano-pinout.png" width="500">
 
-Sensor N°1: D4
-Sensor N°2: D4
+- LCD Display:
 
-Rele: D6
+  - VCC: 5v
+  - GND: GND
+  - SDA: A4
+  - SLC: A5
 
-Control del rele activado por sensor N°2: D7
+- Buttons:
 
-Display LCD (con I2C): 
+  - Next:
+  - Prev:
+  - Select:
 
-- SDA: A4 
-- SCL: A5
+- Reles
 
-After button: D1
-Before button: D2
-Select button: D3
+  - VCC:
+  - GND:
+  - IN1:
+  - IN2:
 
-(Los botones se conectan a gnd y vcc, sacando un cable que verifica cuando se cierra el circuito de los mismos y dicho cable se conecta a los puertos mencionados anteriormente)
+- Humidity sensors:
+
+  - Sensor 1:
+
+    - VCC:
+    - GNC:
+    - D0:
+    - A0:
+
+  - Sensor 2:
+
+    - VCC:
+    - GNC:
+    - D0:
+    - A0:
 
 ## Modules
 
 ---
 
-1. Rutas a configurar
-
-   - ‘/’ navega a <ItemListContainer />
-
-   - ‘/category/:id’ <ItemListContainer />
-
-   - ‘/item/:id’ navega a <ItemDetailContainer />
-
-2. Links a configurar
-
-   - Clickear en el brand debe navegar a ‘/’
-
-   - Clickear un Item.js debe navegar a /item/:id
-
-   - Clickear en una categoría del navbar debe navegar a /category/:categoryId
-
-Para finalizar deberá integrar los parámetros de tus async-mocks para reaccionar a :itemId y :categoryId ¡utilizando efectos y los hooks de parámetros que vimos en clase! Si te encuentras en una categoría deberías poder detectar la navegación a otra categoría y volver a cargar los productos que correspondan a dicha categoría
+- LCD Display 16x2
+- I2C for LCD Display 
+- Reles
+- Water pump
+- Humidity sensor
+- Arduino Nano
 
 ## Usage
 
